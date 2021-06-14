@@ -23,7 +23,7 @@
          配置了这个在 parameterType属性中就不用写User的全类名，
         直接写User即可，可以在这里配置，也可以再spring配置文件中配置 -->
     <typeAliases>
-        <package name="com.crtf.ssm.model"/>
+        <package name="com.crtf.ssm.core.model"/>
     </typeAliases>
 
     <!-- 类型处理程序 -->
