@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!-- 格式化(Formatting) 转换(Conversion) -->
+
+
+    <!-- 配置springmvc -->
+    <!-- 1. 开启springMVC注解模式 -->
+
+    <!-- 简化配置：
+		(1)自动注册DefaultAnootationHandlerMapping,AnotationMethodHandlerAdapter
+		(2)提供一些列：数据绑定，数字和日期的format @NumberFormat, @DateTimeFormat, xml,json默认读写支持
+	-->
+    <mvc:annotation-driven conversion-service="customizeFormattingConversionServiceFactoryBean"/>
+    <bean id="customizeFormattingConversionServiceFactoryBean"
+          class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="formatters">
+            <set>
+                <!-- 格式化转换服务工厂 Bean -->
+            </set>
+        </property>
+    </bean>
+
+    <!-- 指定需要扫描的包 -->
+    <!--    <context:component-scan base-package="com.crtf.ssm.controller,com.crtf.ssm.model"/>-->
+
+    <!-- region 请求映射处理程序适配器 相关 -->
+    <!--        <bean id="byteArrayHttpMessageConverter" class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>-->
+    <!--    &lt;!&ndash;             org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter          &ndash;&gt;-->
+    <!--        <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">-->
+    <!--            <property name="messageConverters">-->
+    <!--                <util:list id="beanList">-->
+    <!--    &lt;!&ndash;                <ref bean="stringHttpMessageConverter"/>&ndash;&gt;-->
+    <!--                    <ref bean="byteArrayHttpMessageConverter"/>-->
+    <!--    &lt;!&ndash;                <ref bean="jsonMappingJacksonHttpMessageConverter"/>&ndash;&gt;-->
+    <!--                </util:list>-->
+    <!--            </property>-->
+    <!--        </bean>-->
+    <!-- endregion -->
+
+</beans>

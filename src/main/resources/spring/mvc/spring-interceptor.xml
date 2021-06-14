@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!-- 拦截器 -->
+
+    <!-- 自定义拦截器 -->
+    <mvc:interceptors>
+        <!-- 用户登录拦截器 -->
+        <mvc:interceptor>
+            <!-- 拦截所有的请求，这个必须写在前面，也就是写在【不拦截】的上面 -->
+            <mvc:mapping path="/**"/>
+            <!-- 但是排除下面这些，也就是不拦截请求 -->
+            <mvc:exclude-mapping path="/resources/"/>
+            <!-- 自定义 拦截器 -->
+            <bean class="com.crtf.ssm.core.interceptor.CustomInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <!-- 国际化拦截器 -->
+            <mvc:mapping path="/user/home"/>
+            <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+                <!-- 监控请求参数 language -->
+                <property name="paramName" value="language"/>
+            </bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+</beans>

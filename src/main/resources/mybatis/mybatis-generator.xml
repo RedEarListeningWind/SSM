@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<!-- mybatis-generator插件生成代码的配置文件 -->
+<generatorConfiguration>
+
+    <!-- 加载配置文件 -->
+    <properties resource="db/config.properties"/>
+
+    <classPathEntry
+            location="D:\Maven\RepoMaven\mysql\mysql-connector-java\8.0.11\mysql-connector-java-8.0.11.jar"/>
+
+
+    <context id="MySQLTables" targetRuntime="MyBatis3">
+
+        <!--    <context id="DB2Tables" targetRuntime="MyBatis3Simple">-->
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="${jdbc.driver}"
+                        connectionURL="${jdbc.url}"
+                        userId="${jdbc.username}"
+                        password="${jdbc.password}">
+        </jdbcConnection>
+
+        <!-- java类型处理器，默认的就这么一个处理器可以用，可以自己写，具体的请参考官方文档http://code.google.com/p/mybatis/wiki/Generator -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 生成 Model，POJO -->
+        <javaModelGenerator targetPackage="com.crtf.ssm.core.model"
+                            targetProject="src\main\java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- 生成映射文件*.xml -->
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject=".\src\main\resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- 生成映射器类 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.crtf.ssm.core.dao"
+                             targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- 指定要生成的表名和对应形成的POJO类名 -->
+        <!--        <table schema="" tableName="ALLTYPES" domainObjectName="Customer" >-->
+        <!--            <property name="useActualColumnNames" value="true"/>-->
+        <!--            <generatedKey column="ID" sqlStatement="DB2" identity="true" />-->
+        <!--            <columnOverride column="DATE_FIELD" property="startDate" />-->
+        <!--            <ignoreColumn column="FRED" />-->
+        <!--            <columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" />-->
+        <!--        </table>-->
+        <table schema=""
+               tableName="ssm_user"
+               domainObjectName="User"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false"
+        >
+            <generatedKey column="u_id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="u_id" property="id"/>
+            <columnOverride column="u_name" property="name"/>
+            <columnOverride column="u_password" property="password"/>
+            <columnOverride column="u_sign_up" property="signUp"
+                            typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler" jdbcType="TIMESTAMP"
+                            javaType="java.time.LocalDateTime"/>
+        </table>
+
+    </context>
+</generatorConfiguration>
+

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.crtf.ssm.core.dao.UserMapper">
+
+  <resultMap id="BaseResultMap" type="com.crtf.ssm.core.model.User">
+    <id column="u_id" jdbcType="INTEGER" property="id" />
+    <result column="u_name" jdbcType="VARCHAR" property="name" />
+    <result column="u_password" jdbcType="VARCHAR" property="password" />
+    <result column="u_sign_up" jdbcType="TIMESTAMP" property="signUp" typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    u_id, u_name, u_password, u_sign_up
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ssm_user
+    where u_id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByNamePassword" parameterType="user" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from ssm_user
+    where u_name = #{name} and
+    u_password = #{password}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="user">
+    select * from ssm_user
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ssm_user
+    where u_id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.crtf.ssm.core.model.User">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ssm_user (u_name, u_password, u_sign_up
+      )
+    values (#{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{signUp,jdbcType=TIMESTAMP,typeHandler=org.apache.ibatis.type.LocalDateTimeTypeHandler}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.crtf.ssm.core.model.User">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ssm_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        u_name,
+      </if>
+      <if test="password != null">
+        u_password,
+      </if>
+      <if test="signUp != null">
+        u_sign_up,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="signUp != null">
+        #{signUp,jdbcType=TIMESTAMP,typeHandler=org.apache.ibatis.type.LocalDateTimeTypeHandler},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.crtf.ssm.core.model.User">
+    update ssm_user
+    <set>
+      <if test="name != null">
+        u_name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        u_password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="signUp != null">
+        u_sign_up = #{signUp,jdbcType=TIMESTAMP,typeHandler=org.apache.ibatis.type.LocalDateTimeTypeHandler},
+      </if>
+    </set>
+    where u_id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.crtf.ssm.core.model.User">
+    update ssm_user
+    set u_name = #{name,jdbcType=VARCHAR},
+      u_password = #{password,jdbcType=VARCHAR},
+      u_sign_up = #{signUp,jdbcType=TIMESTAMP,typeHandler=org.apache.ibatis.type.LocalDateTimeTypeHandler}
+    where u_id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
