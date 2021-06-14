@@ -51,6 +51,6 @@
         <property name="defaultLocale" value="zh_CN"/>
     </bean>
     <!-- 自定义区域解析器 -->
-    <!--        <bean id="localeResolver" class="com.crtf.ssm.util.language.CustomLocaleResolver"/>-->
+    <!--        <bean id="localeResolver" class="com.crtf.ssm.core.util.language.CustomLocaleResolver"/>-->
 
 </beans>
